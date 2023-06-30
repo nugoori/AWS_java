@@ -11,7 +11,7 @@ public class ProductMain {
 		
 		Computer computer2 = (Computer) product;
 		
-		System.out.println(computer2.getType());
+		System.out.println(computer2.getType());                                     
 		
 	}
 
