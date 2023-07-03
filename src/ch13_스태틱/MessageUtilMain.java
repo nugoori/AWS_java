@@ -1,7 +1,5 @@
 package ch13_스태틱;
 
-import ch10_배열.Array01;
-
 public class MessageUtilMain {
 	
 	private int a;

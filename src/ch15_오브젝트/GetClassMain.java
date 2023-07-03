@@ -13,6 +13,7 @@ public class GetClassMain {
 		for(int i = 0; i < methods.length; i++) {
 			System.out.println(methods[i].getName());
 			System.out.println(methods[i].getReturnType());
+			System.out.println("=====");
 		}
 		
 		System.out.println();

@@ -8,11 +8,11 @@ public class Computer extends Product {
 //		System.out.println("컴퓨터 객체 생성");
 //	}
 
+	// 오버로드
 	public Computer(String model, int price) {
 		super(model, price);
 		
 	}	
-		
 	public Computer(String model, int price, String type) {
 		super(model, price);
 		this.type = type;

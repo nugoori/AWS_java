@@ -13,7 +13,7 @@ public class Samsung {
 		companyName = Samsung.class.getSimpleName().toUpperCase();
 	}
 	
-	// 싱글톤 : 
+	// 싱글톤 : 하나의 유일 객체 생성 패턴? > 보통 기능들을 담을 때 사용
 	public static Samsung getInstance() {
 		if(instance == null) {
 			instance = new Samsung();
@@ -24,9 +24,11 @@ public class Samsung {
 	public String getCompanyName() {
 		return companyName;
 	}
+	
 	public int getAutoIncrementSerialNumber() {
 		return autoIncrementSerialNumber;
 	}
+	
 	public void setAutoIncrementSerialNumber(int autoIncrementSerialNumber) {
 		this.autoIncrementSerialNumber = autoIncrementSerialNumber;
 	}
