@@ -12,7 +12,7 @@ public class KoreaUserMain {
 				.email("qwer@qwer.qwer")
 				.build();
 		
-		
+		System.out.println(koreaUser);
 		
 	}
 }

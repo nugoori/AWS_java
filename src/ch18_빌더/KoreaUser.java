@@ -22,7 +22,7 @@ public class KoreaUser {
 //		return new KoreaUserBuilder();  // return (new KoreaUser()).new KoreaUserBuilder();: 스태틱 메소드에서 일반 클래스를 사용해야 할 경우 이렇게 먼저 생성 후 사용해야 한다
 //	}
 //	
-//	// 내부 클래스 : 쓸 일은 별로 많지 않음
+//	// 내부 클래스 : 쓸 일은 별로 많지 않음 / 내부에 만들 지 외부에 만들 지는 선택
 //	public static class KoreaUserBuilder {
 //		private int userId;
 //		private String username;

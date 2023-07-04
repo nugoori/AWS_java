@@ -49,8 +49,7 @@ public class CustomArrayList {
 	// 조건이 많아 별로 좋지않은 코드
 	public String remove(int index) {
 		String value = null;
-		String[] newArray = new String[array.length - 1];			
-		
+		String[] newArray = new String[array.length - 1];					
 		/* 풀이 */
 		value = array[index];
 		
@@ -97,7 +96,7 @@ public class CustomArrayList {
 		StringBuilder builder = new StringBuilder();
 		
 		builder.append("[ ");
-		// for each( 향상된 for문 )
+		// for each( 향상된 for문 : for(자료형 변수명 : 배열명)
 		for(String str : array) {
 			builder.append(str + ", ");
 		}
