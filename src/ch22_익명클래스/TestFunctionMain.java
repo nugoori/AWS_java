@@ -89,5 +89,11 @@ public class TestFunctionMain {
 		// 향상된 for문을 함수형으로 만든 것
 		numbers.forEach(num -> System.out.println("출력: " + num));
 		
+		     /* 새 지역 변수 선언 ( 선언은 한 번만 )  */
+		// for(      User user          : users) {
+//				user = new User(); 
+//				== User user = new User();를 users의 수 만큼 반복
+//			}
+		
 	}
 }
