@@ -19,6 +19,7 @@ public class ListAndMapMain {
 		Map<String, Object> responseData = new HashMap<>();		
 		responseData.put("testUserList", testUsers);
 		responseData.put("statusCode", "OK");
+
 		
 		for(TestUser testUser : (List<TestUser>) responseData.get("testUserList")) {
 			System.out.println(testUser);

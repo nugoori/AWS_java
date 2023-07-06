@@ -19,7 +19,7 @@ public class Student {
 	}
 	
 	Student(String name) {
-		System.out.println("RequiredArgsConstructor");
+//		System.out.println("RequiredArgsConstructor");
 		this.name = name;
 	}
 }

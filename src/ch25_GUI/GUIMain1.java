@@ -58,24 +58,21 @@ public class GUIMain1 extends JFrame {
 		loginPane = new CardLayout(0, 0);
 		
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		contentPane.setLayout(new CardLayout(0, 0));
 		
 		usernameTextField = new JTextField();
-		usernameTextField.setBounds(104, 51, 214, 27);
-		contentPane.add(usernameTextField);
+		contentPane.add(usernameTextField, "name_1017715639899300");
 		usernameTextField.setColumns(10);
 		
 		passwordTextField = new JPasswordField();
-		passwordTextField.setBounds(104, 102, 214, 27);
-		contentPane.add(passwordTextField);
+		contentPane.add(passwordTextField, "name_1017715678326800");
 		passwordTextField.setColumns(10);
 		
 		JButton signinButton = new JButton("Login");
 		signinButton.setForeground(new Color(0, 0, 0));
 		signinButton.setBackground(new Color(255, 255, 255));
 		signinButton.setFont(new Font("D2Coding", Font.PLAIN, 12));
-		signinButton.setBounds(104, 172, 214, 27);
-		contentPane.add(signinButton);
+		contentPane.add(signinButton, "name_1017715698129900");
 		/* 익명 클래스  */
 		signinButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -88,7 +85,7 @@ public class GUIMain1 extends JFrame {
 				}
 				JOptionPane.showInternalMessageDialog(contentPane, "환영합니다.", "로그인 성공", JOptionPane.PLAIN_MESSAGE);
 				
-				
+				contentPane.show();
 			}
 		});
 	}
