@@ -19,11 +19,14 @@ public class GUIMain1 extends JFrame {
 	
 	private final String ADMIN_USERNAME = "admin";
 	private final String ADMIN_PASSWORD = "1234";
+	
+	private CardLayout mainCardLayout;
 
-	private JPanel contentPane;
-	private CardLayout loginPane;
+	private JPanel mainCardPanel;
+	private JPanel loginPanel;
+	private JPanel homePanel;
 	private JTextField usernameTextField;
-	private JPasswordField passwordTextField;
+	private JPasswordField PasswordTextField;
 
 	/**
 	 * Launch the application.
@@ -32,10 +35,8 @@ public class GUIMain1 extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					
 					GUIMain1 frame = new GUIMain1();
 					frame.setVisible(true);
-					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -49,44 +50,57 @@ public class GUIMain1 extends JFrame {
 	public GUIMain1() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		
-		contentPane = new JPanel();
-		contentPane.setBackground(new Color(255, 255, 255));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		// 로그인 화면에서 mainCardPane으로 넘기기?
-		loginPane = new CardLayout(0, 0);
-		
-		setContentPane(contentPane);
-		contentPane.setLayout(new CardLayout(0, 0));
+		mainCardPanel = new JPanel();
+		mainCardLayout = new CardLayout();
+		mainCardPanel.setLayout(mainCardLayout);
+		setContentPane(mainCardPanel);
+			
+		loginPanel = new JPanel();
+		loginPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		loginPanel.setLayout(null); // layout이 null이면 absolte position
+		mainCardPanel.add(loginPanel, "loginPanel");
 		
 		usernameTextField = new JTextField();
-		contentPane.add(usernameTextField, "name_1017715639899300");
+		usernameTextField.setBounds(128, 53, 190, 33);
+		loginPanel.add(usernameTextField);
 		usernameTextField.setColumns(10);
 		
-		passwordTextField = new JPasswordField();
-		contentPane.add(passwordTextField, "name_1017715678326800");
-		passwordTextField.setColumns(10);
+		PasswordTextField = new JPasswordField();
+		PasswordTextField.setBounds(128, 96, 190, 33);
+		loginPanel.add(PasswordTextField);
+		PasswordTextField.setColumns(10);
 		
-		JButton signinButton = new JButton("Login");
-		signinButton.setForeground(new Color(0, 0, 0));
-		signinButton.setBackground(new Color(255, 255, 255));
-		signinButton.setFont(new Font("D2Coding", Font.PLAIN, 12));
-		contentPane.add(signinButton, "name_1017715698129900");
-		/* 익명 클래스  */
-		signinButton.addMouseListener(new MouseAdapter() {
+		JButton signinBtn = new JButton("Login");
+		signinBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				String username = usernameTextField.getText();
-				String password = passwordTextField.getText();
+				String password = PasswordTextField.getText();
+				
 				if(!username.equals(ADMIN_USERNAME) || !password.equals(ADMIN_PASSWORD)) {
-					JOptionPane.showInternalMessageDialog(contentPane, "사용자 정보가 일치하지 않습니다.", "로그인 실패", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(loginPanel, "사용자 정보가 일치하지 않습니다.", "로그인 실패", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				JOptionPane.showInternalMessageDialog(contentPane, "환영합니다.", "로그인 성공", JOptionPane.PLAIN_MESSAGE);
 				
-				contentPane.show();
+				JOptionPane.showMessageDialog(loginPanel, "환영합니다.", "로그인 성공", JOptionPane.PLAIN_MESSAGE);
+				mainCardLayout.show(mainCardPanel, "homePanel");
 			}
 		});
+		signinBtn.setBounds(128, 167, 190, 33);
+		loginPanel.add(signinBtn);
+		
+		homePanel = new JPanel();
+		homePanel.setLayout(null);
+		mainCardPanel.add(homePanel, "homePanel");
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 }
