@@ -39,7 +39,8 @@ public class ServerApplication {
 						System.out.println("이미 서버가 실행중입니다.");
 						break;
 					}
-					System.out.print("서버의 포트번호를 입력하세요: ");
+					
+					System.out.print("서버의 port번호를 입력하세요: ");
 					
 					try {
 						port = scanner.nextInt();						
@@ -53,7 +54,14 @@ public class ServerApplication {
 							serverSocket = new ServerSocket(port);
 							
 							while(!Thread.interrupted()) {
+								/*  클라 소캣  */
 								Socket socket = serverSocket.accept();
+								ConnectedSocket connectedSocket = new ConnectedSocket(socket);
+								connectedSocket.start();
+								
+								ConnectedClientController.getInstance()
+									.getConnectedSockets().add(connectedSocket);
+								
 								System.out.println("접속!");
 								System.out.println(socket.getInetAddress().getHostAddress());
 							}

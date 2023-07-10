@@ -4,9 +4,9 @@ public class UserMain {
 
     public static void main(String[] args) {
 
-        User user = new User("jumil", "1234", "김준일", "junil@gmail.com");
+        Car car = new Car("현대자동차", "그랜저", "화이트");
 
-        System.out.println(user);
+        System.out.println(car);
 
     
     }

@@ -1,24 +1,31 @@
 package 능력단위평가;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Main {
 	 
 	public static void main(String[] args) {
-		
-		
-//		Order order = null;
-		Order order = Order.builder()
-				.orderId(100)
-				.productName("Samsug GalaxyBook2 Pro")
-				.consumerName("홍길동")
-				.price(1450000)
-				.stock(2)
-				.build();
+		List<Wifi> devices = new ArrayList<>();
+			devices.add(new SmartPhone());
+			devices.add(new Laptop());
+	
+		for(Wifi device: devices) {
+			if(device.getClass() == SmartPhone.class) {
+				device.connected();
+				((SmartPhone) device).call();
+			}
+			if(device.getClass() == Laptop.class) {
+				device.connected();
+				((Laptop) device).onSavingMode();
+			}
 			
-		order.showOrderInfo();
+	
+		}
+		
 		
 	}
 	
-	
 }
-
 
