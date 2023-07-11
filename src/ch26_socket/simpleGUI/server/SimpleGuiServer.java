@@ -19,8 +19,8 @@ public class SimpleGuiServer {
 			while (true) {
 				Socket socket = serverSocket.accept();
 				ConnectedSocket connectedSocket = new ConnectedSocket(socket);
-				connectedSocketList.add(connectedSocket);
 				connectedSocket.start();
+				connectedSocketList.add(connectedSocket);
 							
 			}
 			

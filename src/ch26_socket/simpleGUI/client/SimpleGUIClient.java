@@ -4,32 +4,62 @@ import java.awt.EventQueue;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Iterator;
 import java.util.Objects;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import ch26_socket.simpleGUI.client.dto.RequestBodyDto;
+import ch26_socket.simpleGUI.client.dto.SendMessage;
+import lombok.Getter;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+@Getter
 public class SimpleGUIClient extends JFrame {
+	
+	// Receiver에서 SimpleGUI client의 메서드등을 사용하기 위해
+	private static SimpleGUIClient instance;
+	public static SimpleGUIClient getInstance() {
+		if(instance == null) {
+			instance = new SimpleGUIClient();
+		}
+		return instance;
+	}
 
 	private String username;
 	private Socket socket;
 
 	private JPanel contentPane;
 	private JTextField textField;
+	private JTextArea textArea;
+	private JScrollPane userListScrollPane;
+	private DefaultListModel<String> userListModel;
+	private JList userList;
+	
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					SimpleGUIClient frame = new SimpleGUIClient();
+					SimpleGUIClient frame = SimpleGUIClient.getInstance();
 					frame.setVisible(true);
+										
+					ClientReceiver clientReceiver = new ClientReceiver(); // receiver 스레드에서 getter로 변수를 받아가기 때문에 매개변수가 필요없음
+					clientReceiver.start();
+				
+					RequestBodyDto<String> requestBodyDto = new RequestBodyDto<String>("join", frame.username);
+					ClientSender.getInstance().send(requestBodyDto);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -49,7 +79,7 @@ public class SimpleGUIClient extends JFrame {
 		}
 		
 		try {
-			socket = new Socket("127.0.0.1", 8000);
+			socket = new Socket("127.0.0.1", 8000); // > 생성되면 .accept와 연결
 			
 			
 		} catch (IOException e) {
@@ -65,10 +95,10 @@ public class SimpleGUIClient extends JFrame {
 		contentPane.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(12, 10, 410, 210);
+		scrollPane.setBounds(12, 10, 291, 210);
 		contentPane.add(scrollPane);
 		
-		JTextArea textArea = new JTextArea();
+		textArea = new JTextArea();
 		scrollPane.setViewportView(textArea);
 		
 		textField = new JTextField();
@@ -76,20 +106,34 @@ public class SimpleGUIClient extends JFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-					try {
-						PrintWriter printWriter = new PrintWriter(socket.getOutputStream(), true);
-						printWriter.println(username + ": " + textField.getText());
-						
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					} finally {
-						textField.setText("");
-					}
+					
+					SendMessage sendMessage = SendMessage.builder()
+							.fromUsername(username)
+							.messageBody(textField.getText())
+							.build();
+					
+					RequestBodyDto<SendMessage> requestBodyDto = 
+							new RequestBodyDto<>("sendMessage", sendMessage);
+					
+					ClientSender.getInstance().send(requestBodyDto);
+					textField.setText("");
 				}
 			}
 		});
 		textField.setBounds(12, 230, 410, 21);
 		contentPane.add(textField);
 		textField.setColumns(10);
+		
+		userListScrollPane = new JScrollPane();
+		userListScrollPane.setBounds(315, 10, 107, 210);
+		contentPane.add(userListScrollPane);
+
+		userListModel = new DefaultListModel<>();
+		userList = new JList(userListModel);
+		userListScrollPane.setViewportView(userList);
+		
+		
+		
+	
 	}
 }
