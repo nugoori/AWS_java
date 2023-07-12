@@ -11,12 +11,16 @@ import ch26_socket.simpleGUI.client.dto.RequestBodyDto;
 
 public class ClientReceiver extends Thread{
 	
+	private Gson gson = new Gson();
+	
 	// private final Socket socket; > client에서 receiver를 생성할 때 socket을 매개변수로 받아오는게 아니라
 	// client를 싱글톤패턴으로 만들어서 생성한 client객체를 getInstance로 가져와서 그 client의 getter로 socket을 가져옴
 	
 	@Override
 	public void run() {
+		gson = new Gson();
 		SimpleGUIClient simpleGUIClient = SimpleGUIClient.getInstance();
+		
 		while (true) {
 			try {
 				BufferedReader bufferedReader =
@@ -33,25 +37,46 @@ public class ClientReceiver extends Thread{
 	}
 	
 	private void requestController(String requestBody) {
-		Gson gson = new Gson();
 		
 		String resource = gson.fromJson(requestBody, RequestBodyDto.class).getResource();
 		
 		switch(resource) {
+			case "updateRoomList" : 
+				updateRoomList(requestBody);
+				break;
 		
 			case "showMessage":
-				String messageContent = (String) gson.fromJson(requestBody, RequestBodyDto.class).getBody();
-				SimpleGUIClient.getInstance().getTextArea().append(messageContent + "\n");
-				
+				showMessage(requestBody);
 				break;
 			
 			case "updateUserList" : 
-				List<String> usernameList = (List<String>) gson.fromJson(requestBody, RequestBodyDto.class).getBody();
-				SimpleGUIClient.getInstance().getUserListModel().clear();
-				SimpleGUIClient.getInstance().getUserListModel().addAll(usernameList);;
-				
+				updateUserList(requestBody);
 				break;
+			
 		}
+	}
+	
+	private void updateRoomList(String requestBody) {
+		List<String> roomList = (List<String>) gson.fromJson(requestBody, RequestBodyDto.class).getBody();
+		SimpleGUIClient.getInstance().getRoomListModel().clear();
+		SimpleGUIClient.getInstance().getRoomListModel().addAll(roomList);
+	}
+	
+	private void showMessage(String requestBody) {
+		String messageContent = (String) gson.fromJson(requestBody, RequestBodyDto.class).getBody();
+		SimpleGUIClient.getInstance().getChattingTextArea().append(messageContent + "\n");;
+	}
+	
+	private void updateUserList(String requestBody) {
+		List<String> usernameList = (List<String>) gson.fromJson(requestBody, RequestBodyDto.class).getBody();
+		SimpleGUIClient.getInstance().getUserListModel().clear();
+		SimpleGUIClient.getInstance().getUserListModel().addAll(usernameList);;
+	}
+	
+	// 음./...
+	private void exitRoom(String requestBody) {
+		List<String> usernameList = (List<String>) gson.fromJson(requestBody, RequestBodyDto.class).getBody();
+		SimpleGUIClient.getInstance().getUserListModel().remove(MAX_PRIORITY);
 	}
 	
 }
